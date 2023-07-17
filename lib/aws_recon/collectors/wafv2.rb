@@ -38,7 +38,7 @@ class WAFV2 < Mapper
 
           # list_resources_for_web_acl
           @client.list_resources_for_web_acl({ web_acl_arn: acl.arn }).each do |r|
-            struct.resources = r.resource_arns.map(&:to_h)
+            struct.resources = r.resource_arns
           end
 
           resources.push(struct.to_h)
