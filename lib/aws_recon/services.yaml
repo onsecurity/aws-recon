@@ -14,10 +14,6 @@
   alias: codebuild
 - name: CodePipeline
   alias: codepipeline
-  excluded_regions:
-    - af-south-1
-    - ap-northeast-3
-    - me-south-1
 - name: AutoScaling
   alias: autoscaling
 - name: CloudTrail
@@ -57,6 +53,11 @@
   alias: ecr
 - name: ECRPublic
   alias: ecrpublic
+  # ECR Public exists in us-east-1 and us-west-2 only, per
+  # /aws/service/global-infrastructure/services/ecr-public/regions. Everything
+  # else is excluded. The previous list repeated af-south-1, ap-east-1,
+  # eu-south-1 and me-south-1 a second time, and wrongly excluded us-west-2 -
+  # half the service was invisible.
   excluded_regions:
     - af-south-1
     - ap-east-1
@@ -77,11 +78,6 @@
     - sa-east-1
     - us-east-2
     - us-west-1
-    - us-west-2
-    - af-south-1
-    - ap-east-1
-    - eu-south-1
-    - me-south-1
 - name: DynamoDB
   alias: dynamodb
 - name: KMS
@@ -143,11 +139,9 @@
   alias: lightsail
   excluded_regions:
     - af-south-1
-    - ap-east-1
     - ap-northeast-3
     - eu-south-1
     - me-south-1
-    - sa-east-1
     - us-west-1
 - name: WorkSpaces
   alias: workspaces
@@ -156,9 +150,7 @@
     - ap-northeast-3
     - eu-north-1
     - eu-south-1
-    - eu-west-3
     - me-south-1
-    - us-east-2
     - us-west-1
 - name: SageMaker
   alias: sagemaker
