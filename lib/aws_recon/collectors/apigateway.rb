@@ -31,7 +31,14 @@ class APIGateway < Mapper
         struct.models = @client.get_models({ rest_api_id: api.id }).items.map(&:to_h)
 
         # get_resources
-        struct.resources = @client.get_resources({ rest_api_id: api.id }).items.map(&:to_h)
+        #
+        # embed: methods is required for resource_methods to carry anything.
+        # Without it the API returns the method names with empty bodies -
+        # {"POST" => {}} - so authorization_type is absent and a method with
+        # IAM auth is indistinguishable from an unauthenticated one. Verified
+        # against a live REST API: the same call with the embed returns
+        # authorization_type, api_key_required and the integration.
+        struct.resources = @client.get_resources({ rest_api_id: api.id, embed: ['methods'] }).items.map(&:to_h)
 
         resources.push(struct.to_h)
       end

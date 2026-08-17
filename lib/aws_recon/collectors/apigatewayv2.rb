@@ -27,6 +27,15 @@ class ApiGatewayV2 < Mapper
         # get_stages
         struct.stages = @client.get_stages({ api_id: api.api_id }).items.map(&:to_h)
 
+        # get_routes
+        #
+        # Authorisation can be configured per route rather than by attaching an
+        # authorizer to the API, so without the routes there is no way to tell a
+        # genuinely unprotected API from one using route-level IAM auth. Each
+        # route carries authorization_type (NONE / AWS_IAM / JWT / CUSTOM) and
+        # api_key_required.
+        struct.routes = @client.get_routes({ api_id: api.api_id }).items.map(&:to_h)
+
         # get_models
         struct.models = @client.get_models({ api_id: api.api_id }).items.map(&:to_h)
 
