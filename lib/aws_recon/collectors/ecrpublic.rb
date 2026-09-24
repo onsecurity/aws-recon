@@ -51,7 +51,7 @@ class ECRPublic < Mapper
   # not an error
   def suppressed_errors
     %w[
-      RepositoryPolicyNotFoundException,
+      RepositoryPolicyNotFoundException
       ScanNotFoundException
     ]
   end
